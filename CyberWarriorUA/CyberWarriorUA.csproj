@@ -1,0 +1,91 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>Enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="System.Text.Json" Version="6.0.2" />
+    <PackageReference Include="Fody" Version="6.6.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.1" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
+    <PackageReference Include="Realm" Version="10.10.0" />
+    <PackageReference Include="Realm.Fody" Version="10.10.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="System.Text.Json" />
+    <None Remove="Fody" />
+    <None Remove="PropertyChanged.Fody" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Xamarin.Forms.PancakeView" />
+    <None Remove="Prism.DryIoc.Forms" />
+    <None Remove="Page\" />
+    <None Remove="Pages\MainTabbedPage\" />
+    <None Remove="MVVM\" />
+    <None Remove="Pages\StartPage\" />
+    <None Remove="Pages\AddNewDDOSPage\" />
+    <None Remove="Realm" />
+    <None Remove="Realm.Fody" />
+    <None Remove="Converters\" />
+    <None Remove="AppResources.uk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\" />
+    <Folder Include="Pages\MainTabbedPage\" />
+    <Folder Include="MVVM\" />
+    <Folder Include="Pages\StartPage\" />
+    <Folder Include="Pages\AddNewDDOSPage\" />
+    <Folder Include="Converters\" />
+  </ItemGroup>
+<!--  <ItemGroup>
+    <EmbeddedResource Include="AppResources.uk.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.uk.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="AppResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="AppResources.Designer.cs">
+      <DependentUpon>AppResources.uk</DependentUpon>
+    </Compile>
+    <Compile Update="AppResources.uk.Designer.cs">
+      <DependentUpon>AppResources.uk.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>-->
+  <ItemGroup>
+    <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="AppResources.uk.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.uk.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="AppResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="AppResources.uk.Designer.cs">
+      <DependentUpon>AppResources.uk.resx</DependentUpon>
+    </Compile>
+    <Compile Update="AppResources.Designer.cs">
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

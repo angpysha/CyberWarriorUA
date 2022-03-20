@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    ios:Page.UseSafeArea="True"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:local="clr-namespace:CyberWarriorUA.Pages.AddNewDDOSPage"
+    x:DataType="local:AddNewDDOSViewModel"
+    x:Class="CyberWarriorUA.Pages.AddNewDDOSPage.AddNewDDOSPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="16,0">
+                <Label Text="Close"
+                 HorizontalOptions="EndAndExpand"
+                 TextColor="{StaticResource Primary}"
+                 xct:TouchEffect.NativeAnimation="True"
+                 xct:TouchEffect.Command="{Binding ClosePageCommand}"/>
+
+                <Label Text="Title"/>
+                <Entry Text="{Binding AttackModel.Title}"/>
+                <Label Text="URL"/>
+                <Entry Text="{Binding AttackModel.URL, Mode=TwoWay}"/>
+                <Label Text="Protocol"/>
+                <Picker ItemsSource="{Binding Protocols}"
+                        SelectedItem="{Binding Protocol}"/>
+                <Label Text="Port"
+                       />
+                <Entry Placeholder="80"
+                       Text="{Binding AttackModel.Port}"/>
+                <Label Text="Message"/>
+                <Entry Text="{Binding AttackModel.Message}"/>
+                <StackLayout IsVisible="False">
+                    <StackLayout.Triggers>
+                        <DataTrigger TargetType="StackLayout"
+                                     Binding="{Binding Protocol}"
+                                     Value="HTTP">
+                            <DataTrigger.Setters>
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </StackLayout.Triggers>
+                    <Label Text="Http method"/>
+                    <Picker ItemsSource="{Binding HttpMethods}"
+                            SelectedItem="{Binding HttpMethod}"/>
+                </StackLayout>
+                <Label Text="Num threads"/>
+                <Entry Text="{Binding AttackModel.NumThreads}"/>
+                <Label Text="Timeout"/>
+                <Entry Text="{Binding AttackModel.Timeout}"/>
+                <Button Text="Add"
+                        Command="{Binding AddNewDDOSCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
