@@ -7,7 +7,7 @@ namespace CyberWarriorUA.Services
 {
     public class UDPDDoSAttacker : DDoSBase
     {
-        public UDPDDoSAttacker(AttackModel attackModel) : base(attackModel)
+        public UDPDDoSAttacker(AttackInfo attackModel) : base(attackModel)
         {
         }
 

@@ -7,7 +7,7 @@ namespace CyberWarriorUA.Services
 {
     public class TcpDDoSAttacker : DDoSBase
     {
-        public TcpDDoSAttacker(AttackModel attackModel) : base(attackModel)
+        public TcpDDoSAttacker(AttackInfo attackModel) : base(attackModel)
         {
         }
 

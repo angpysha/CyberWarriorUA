@@ -18,7 +18,7 @@
                  xct:TouchEffect.Command="{Binding ClosePageCommand}"/>
 
                 <Label Text="Title"/>
-                <Entry Text="{Binding AttackModel.Title}"/>
+                <Entry Text="{Binding AttackModel.Title, Mode=TwoWay}"/>
                 <Label Text="URL"/>
                 <Entry Text="{Binding AttackModel.URL, Mode=TwoWay}"/>
                 <Label Text="Protocol"/>
@@ -49,7 +49,18 @@
                 <Label Text="Timeout"/>
                 <Entry Text="{Binding AttackModel.Timeout}"/>
                 <Button Text="Add"
-                        Command="{Binding AddNewDDOSCommand}"/>
+                        Command="{Binding AddNewDDOSCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                                     Binding="{Binding IsUpdate}"
+                                     Value="True">
+                            <DataTrigger.Setters>
+                                <Setter Property="Text"
+                                        Value="Update"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <LangVersion>9.0</LangVersion>
     <Nullable>Enable</Nullable>
@@ -24,23 +24,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="System.Text.Json" />
-    <None Remove="Fody" />
-    <None Remove="PropertyChanged.Fody" />
-    <None Remove="Xamarin.CommunityToolkit" />
-    <None Remove="Xamarin.Forms.PancakeView" />
-    <None Remove="Prism.DryIoc.Forms" />
-    <None Remove="Page\" />
-    <None Remove="Pages\MainTabbedPage\" />
-    <None Remove="MVVM\" />
-    <None Remove="Pages\StartPage\" />
-    <None Remove="Pages\AddNewDDOSPage\" />
-    <None Remove="Realm" />
-    <None Remove="Realm.Fody" />
-    <None Remove="Converters\" />
-    <None Remove="AppResources.uk" />
+    <PackageReference Include="DynamicData" Version="7.6.5" />
+    <PackageReference Include="Jint" Version="2.11.58" />
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\" />
@@ -49,27 +35,9 @@
     <Folder Include="Pages\StartPage\" />
     <Folder Include="Pages\AddNewDDOSPage\" />
     <Folder Include="Converters\" />
+    <Folder Include="Services\ConsoleLogService\" />
+    <Folder Include="Pages\ConsoleLogPage\" />
   </ItemGroup>
-<!--  <ItemGroup>
-    <EmbeddedResource Include="AppResources.uk.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.uk.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="AppResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="AppResources.Designer.cs">
-      <DependentUpon>AppResources.uk</DependentUpon>
-    </Compile>
-    <Compile Update="AppResources.uk.Designer.cs">
-      <DependentUpon>AppResources.uk.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>-->
   <ItemGroup>
     <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="AppResources.uk.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

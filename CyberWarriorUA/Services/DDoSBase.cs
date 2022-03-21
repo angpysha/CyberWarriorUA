@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CyberWarriorUA.Models;
+using CyberWarriorUA.Services.ConsoleLogService;
+using Prism.Ioc;
+using Xamarin.CommunityToolkit.Helpers;
 
 namespace CyberWarriorUA.Services
 {
     public abstract class DDoSBase : IDDosBase
     {
-        protected AttackModel AttackModel { get; }
+        protected AttackInfo AttackModel { get; }
 
-        protected DDoSBase(AttackModel attackModel)
+        protected IConsoleLogService Logger => ContainerLocator.Container.Resolve<IConsoleLogService>();
+
+        protected WeakEventManager<DDoSInfo> _ddosInfoManager = new WeakEventManager<DDoSInfo>();
+
+
+        public event EventHandler<DDoSInfo> OnAttackFinished
+        {
+            add => _ddosInfoManager.AddEventHandler(value);
+            remove => _ddosInfoManager.RemoveEventHandler(value);
+        }
+
+        protected DDoSBase(AttackInfo attackModel)
         {
             AttackModel = attackModel;
         }
@@ -23,7 +37,7 @@ namespace CyberWarriorUA.Services
 
     public static class DDoSerCreator
     {
-        public static DDoSBase? CreateDDoSer(this AttackModel attackModel)
+        public static DDoSBase? CreateDDoSer(this AttackInfo attackModel)
         {
             var protocolType = (EProtocolType)attackModel.Protocol;
             if (protocolType == EProtocolType.HTTP)

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using BackgroundTasks;
+using CyberWarriorUA.iOS.Service;
 using CyberWarriorUA.Models;
 using CyberWarriorUA.Services;
+using CyberWarriorUA.Services.ConsoleLogService;
 using Foundation;
+using Prism;
 using Prism.Ioc;
 using UIKit;
 using Xamarin.Forms.Platform.iOS;
@@ -31,18 +34,8 @@ namespace CyberWarriorUA.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(new App(new iOSInitializer()));
             RegisterBackgroundTasks();
-            var id = "net.petrovskyi.CyberWarriorUA.ddospressor";
-            var nsId = new NSString(id);
-            var appRefresh = new BGProcessingTaskRequest("net.petrovskyi.CyberWarriorUA.ddospressor");
-            appRefresh.EarliestBeginDate = DateTime.Now.ToNSDate();
-            BGTaskScheduler.Shared.Submit(appRefresh, out NSError error);
-            var selectorStr = "_simulateLaunchForTaskWithIdentifier:";
-            var selectorFinish = "_simulateExpirationForTaskWithIdentifier:";
-            var selector = new ObjCRuntime.Selector(selectorStr);
-            Intptr_objc_msgSend(BGTaskScheduler.Shared.Handle, selector.Handle, nsId.Handle);
-
             return base.FinishedLaunching(app, options);
         }
 
@@ -51,37 +44,20 @@ namespace CyberWarriorUA.iOS
             var id = 
             BGTaskScheduler.Shared.Register(@"net.petrovskyi.CyberWarriorUA.ddospressor", null, t =>
             {
-                var realm = Realms.Realm.GetInstance();
-                //Unfotunatuly, relam does not support where for IQuearyable
-                var items = realm.All<AttackModel>().ToList().Where(x => x.IsActive).ToList();
-
-                while (true)
-                {
-                    var container = ContainerLocator.Container;
-                    
-                    foreach (var item in items) {
-                        int numOfThreads = item.NumThreads;
-                        WaitHandle[] waitHandles = new WaitHandle[numOfThreads];
-
-                        for (int i = 0; i < numOfThreads; i++)
-                        {
-                            var j = i;
-                            // Or you can use AutoResetEvent/ManualResetEvent
-                            var handle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                            var thread = new Thread(async () =>
-                            {
-                                var attacker = item.CreateDDoSer();
-                                await attacker.Attack();
-                            });
-                            waitHandles[j] = handle;
-                            thread.Start();
-                        }
-                        WaitHandle.WaitAll(waitHandles);
-                    }
-                }
+                var container = ContainerLocator.Container;
+                var ddoser = ContainerLocator.Container.Resolve<IBackgroundDDoSer>();
+                ddoser.RunBackgroundTask((object)t);
             });
         }
 
         // override ha
+    }
+
+    public class iOSInitializer : IPlatformInitializer
+    {
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterSingleton<IBackgroundDDoSer, BackgroundDDoSer>();
+        }
     }
 }

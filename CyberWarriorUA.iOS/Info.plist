@@ -43,5 +43,7 @@
 	<array>
 		<string>net.petrovskyi.CyberWarriorUA.ddospressor</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

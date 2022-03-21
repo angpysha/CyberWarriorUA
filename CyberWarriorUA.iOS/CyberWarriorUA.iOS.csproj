@@ -15,6 +15,7 @@
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <ProvisioningType>automatic</ProvisioningType>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -201,6 +202,8 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024-2.png" />
     <ImageAsset Include="Assets.xcassets\icon_turnon.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\icon_turnon.imageset\icon_turnon.pdf" />
+    <ImageAsset Include="Assets.xcassets\icon_console.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\icon_console.imageset\icon_console.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -247,5 +250,6 @@
     <Folder Include="Helpers\" />
     <Folder Include="Assets.xcassets\icon_turnon.imageset\" />
     <Folder Include="Service\" />
+    <Folder Include="Assets.xcassets\icon_console.imageset\" />
   </ItemGroup>
 </Project>

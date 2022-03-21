@@ -11,7 +11,8 @@
     xmlns:local="clr-namespace:CyberWarriorUA.Pages.StartPage"
     xmlns:models="clr-namespace:CyberWarriorUA.Models"
     x:DataType="local:StartPageViewModel"
-    x:Class="CyberWarriorUA.Pages.StartPage.StartPage">
+    x:Class="CyberWarriorUA.Pages.StartPage.StartPage"
+    x:Name="StartView">
     <ContentPage.Content>
         <Grid>
             <StackLayout BackgroundColor="#f7f7f7">
@@ -20,24 +21,41 @@
                        HeightRequest="80"
                        HorizontalOptions="CenterAndExpand"
                        xct:TouchEffect.NativeAnimation="True"
-                       xct:IconTintColorEffect.TintColor="Red"/>
-                <!--<Label Text="Here will be list of attacs"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand"/>-->
+                       xct:IconTintColorEffect.TintColor="Red"
+                       xct:TouchEffect.Command="{Binding StartCommand}">
+                    <Image.Triggers>
+                        <DataTrigger Binding="{Binding IsRunning}"
+                                     TargetType="Image"
+                                     Value="True">
+                            <DataTrigger.Setters>
+                                <Setter Property="xct:IconTintColorEffect.TintColor"
+                                        Value="Green"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
                 <CollectionView ItemsSource="{Binding AttackModels}"
                                 Margin="0,3">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:AttackModel">
+                        <DataTemplate x:DataType="models:AttackInfo">
                             <pancakeview:PancakeView BackgroundColor="White"
-                                                     HeightRequest="85"
+                                                     HeightRequest="105"
                                                      Margin="0,3"
                                                      HorizontalOptions="FillAndExpand">
-                                <Grid ColumnDefinitions="Auto, *"
+                                <Grid ColumnDefinitions="Auto, *, Auto"
                                       Padding="0, 5"
                                       RowDefinitions="Auto, Auto, Auto">
                                     <Switch VerticalOptions="CenterAndExpand"
                                             Margin="5,0"
-                                            Grid.RowSpan="3"/>
+                                            Grid.RowSpan="3"
+                                            IsToggled="{Binding IsActive, Mode=TwoWay}">
+                                        <Switch.Behaviors>
+                                            <xct:EventToCommandBehavior EventName="Toggled"
+                                                                        Command="{Binding BindingContext.SwitchChangedCommand,
+                                                                        Source={x:Reference StartView}}"
+                                                                        CommandParameter="{Binding .}"/>
+                                        </Switch.Behaviors>
+                                    </Switch>
                                     <Label Text="{Binding Title}"
                                            Grid.Column="1"
                                            FontAttributes="Bold"/>
@@ -55,6 +73,36 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="2">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Threads: "/>
+                                                <Span Text="{Binding NumThreads}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Text="Delete"
+                                           Grid.Column="2"
+                                           Margin="5"
+                                           xct:TouchEffect.NativeAnimation="True"
+                                           xct:TouchEffect.Command="{Binding BindingContext.DeleteCommand,
+                                           Source={x:Reference StartView}}"
+                                           TextColor="Red"
+                                           />
+
+                                    <Label Text="Edit"
+                                           Grid.Column="2"
+                                           Grid.Row="1"
+                                           Margin="5"
+                                           xct:TouchEffect.NativeAnimation="True"
+                                           xct:TouchEffect.Command="{Binding BindingContext.EditCommand,
+                                           Source={x:Reference StartView}}"
+                                           xct:TouchEffect.CommandParameter="{Binding .}"
+                                           TextColor="Orange"
+                                           />
 
                                 </Grid>
                             </pancakeview:PancakeView>

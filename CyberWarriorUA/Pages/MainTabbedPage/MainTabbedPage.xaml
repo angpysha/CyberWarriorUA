@@ -3,6 +3,7 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:startpage="clr-namespace:CyberWarriorUA.Pages.StartPage"
+            xmlns:console="clr-namespace:CyberWarriorUA.Pages.ConsoleLogPage"
             xmlns:prism="http://prismlibrary.com"
             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
             prism:ViewModelLocator.AutowireViewModel="True"
@@ -10,4 +11,6 @@
     <!--Pages can be added as references or inline-->
     <startpage:StartPage Title="{xct:Translate Fire}"
                          IconImageSource="icon_fire" />
+    <console:ConsoleLogPage Title="Log"
+                            IconImageSource="icon_console"/>
 </TabbedPage>
