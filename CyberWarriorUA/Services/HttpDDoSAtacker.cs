@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using CloudFlareUtilities;
 using CyberWarriorUA.Models;
 
 namespace CyberWarriorUA.Services
@@ -27,14 +28,18 @@ namespace CyberWarriorUA.Services
                     Proxy = proxy
                 };
 
+                //Check later for cloudflare bypass
+                var handler = new ClearanceHandler
+                {
+                    MaxRetries = 2,// Optionally specify the number of retries, if clearance fails (default is 3).
+                };
+
+
                 var httpClient = new HttpClient();
 
                 var request = new HttpRequestMessage();
                 request.Method = GetMethod();
-                if (request.Method != HttpMethod.Get)
-                {
-                    request.Content = new StringContent(AttackModel.Message);
-                }
+                request.Content = new StringContent(AttackModel.Message);
                 request.RequestUri = GetUri();
 
                 await Task.Delay(200);
