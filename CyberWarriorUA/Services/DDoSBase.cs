@@ -27,12 +27,12 @@ namespace CyberWarriorUA.Services
             AttackModel = attackModel;
         }
 
-        public abstract Task Attack();
+        public abstract Task<DDoSInfo> Attack();
     }
 
     public interface IDDosBase
     {
-        Task Attack();
+        Task<DDoSInfo> Attack();
     }
 
     public static class DDoSerCreator

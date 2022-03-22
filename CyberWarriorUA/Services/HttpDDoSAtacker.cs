@@ -14,7 +14,7 @@ namespace CyberWarriorUA.Services
         {
         }
 
-        public override async Task Attack()
+        public override async Task<DDoSInfo> Attack()
         {
             try
             {
@@ -39,26 +39,31 @@ namespace CyberWarriorUA.Services
 
                 var request = new HttpRequestMessage();
                 request.Method = GetMethod();
-                request.Content = new StringContent(AttackModel.Message);
+                if (request.Method != HttpMethod.Get)
+                {
+                    request.Content = new StringContent(AttackModel.Message);
+                }
                 request.RequestUri = GetUri();
 
                 await Task.Delay(200);
 
                 var response = await httpClient.SendAsync(request);
-
-                var reqSize = request.Content.Headers.ContentLength;
+                
+                var reqSize = request.Content?.Headers?.ContentLength ?? 0;
+                await response.Content.LoadIntoBufferAsync();
                 var resSize = response.Content.Headers.ContentLength;
-                _ddosInfoManager.RaiseEvent(this, new DDoSInfo
+                var ddosInfo = new DDoSInfo
                 {
                     Received = resSize,
                     Sent = reqSize
 
-                }, nameof(OnAttackFinished));
+                };
                 httpClient.Dispose();
                 response.Dispose();
+                return ddosInfo;
             } catch (Exception ex)
             {
-    
+                return new DDoSInfo();
             }
         }
 

